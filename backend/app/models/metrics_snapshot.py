@@ -6,7 +6,13 @@ Chaque ligne représente les données agrégées d'un site pour une journée don
 Alimente les graphiques d'évolution du trafic et les KPIs des mockups.
 """
 
+from __future__ import annotations
+
 from datetime import date, datetime
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.models.site import Site
 
 from sqlalchemy import (
     Integer, Float, Date, DateTime, ForeignKey,
@@ -86,7 +92,7 @@ class MetricsSnapshot(Base):
     )
 
     # --- Relation inverse ---
-    site: Mapped["Site"] = relationship("Site", back_populates="metrics_snapshots")  # noqa: F821
+    site: Mapped[Site] = relationship("Site", back_populates="metrics_snapshots")
 
     def __repr__(self) -> str:
         return (

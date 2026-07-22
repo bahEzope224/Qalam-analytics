@@ -45,6 +45,7 @@ build/
 *.spec
 *.so
 *.dylib
+backend/.ruff_cache
 
 # Environnements virtuels
 venv/
