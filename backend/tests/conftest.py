@@ -6,7 +6,6 @@ Usage:
     - sync tests: use the `client` fixture (httpx.TestClient).
 """
 
-import pytest
 
 
 # ---------------------------------------------------------------------------
