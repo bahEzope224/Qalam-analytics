@@ -12,6 +12,7 @@ Correspond au screen_2 : 'Paramètres'.
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -24,12 +25,6 @@ from app.core.config import settings
 
 router = APIRouter()
 
-
-# ---------------------------------------------------------------------------
-# Schémas internes (légers, pas besoin d'un fichier séparé)
-# ---------------------------------------------------------------------------
-
-from pydantic import BaseModel
 
 
 class GA4ConnectionStatus(BaseModel):

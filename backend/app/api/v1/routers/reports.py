@@ -7,7 +7,7 @@ GET  /api/v1/reports/export    → exporter en PDF (stub)
 Correspond au screen_10 : 'Génération de rapports'.
 """
 
-from typing import Annotated, Literal
+from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import JSONResponse

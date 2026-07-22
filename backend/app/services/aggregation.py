@@ -10,9 +10,8 @@ Ce service est la couche entre les routers et le GA4Client :
 
 import logging
 from datetime import date, timedelta
-from typing import Any
 
-from sqlalchemy import select, func
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.site import Site, SiteStatus

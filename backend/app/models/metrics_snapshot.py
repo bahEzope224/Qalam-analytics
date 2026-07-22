@@ -10,7 +10,7 @@ from datetime import date, datetime
 
 from sqlalchemy import (
     Integer, Float, Date, DateTime, ForeignKey,
-    func, UniqueConstraint, String
+    func, UniqueConstraint
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 

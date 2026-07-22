@@ -9,7 +9,6 @@ https://developers.google.com/analytics/devguides/reporting/data/v1
 """
 
 import logging
-from datetime import date
 from typing import Any
 
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
@@ -20,8 +19,6 @@ from google.analytics.data_v1beta.types import (
     RunReportRequest,
     RunReportResponse,
     RunRealtimeReportRequest,
-    Filter,
-    FilterExpression,
 )
 from google.oauth2 import service_account
 

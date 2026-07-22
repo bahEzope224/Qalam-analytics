@@ -7,7 +7,7 @@ GET /api/v1/overview/cards
 Correspond au screen_4 : 'Vue d'ensemble des sites'.
 """
 
-from typing import Annotated, Literal
+from typing import Literal
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select
@@ -16,11 +16,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.v1.dependencies import get_current_user, get_db
 from app.models.site import Site, SiteStatus
 from app.models.user import User
-from app.schemas.metrics import GlobalMetrics, SiteDetailMetrics
+from app.schemas.metrics import GlobalMetrics
 from app.schemas.site import SiteDashboardCard
 from app.services.aggregation import AggregationService, compute_trend
 from app.services.ga4_client import GA4Client
-from app.core.config import settings
 
 router = APIRouter()
 

@@ -29,9 +29,8 @@ from datetime import date, datetime, timezone
 from typing import Any
 
 from celery import Task, group
-from sqlalchemy import select, update
+from sqlalchemy import select
 
-from app.db.base_class import Base
 from app.models.site import Site, SiteStatus
 from app.models.metrics_snapshot import MetricsSnapshot
 from app.worker import celery_app

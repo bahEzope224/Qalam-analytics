@@ -12,15 +12,19 @@ import os
 import sys
 from logging.config import fileConfig
 
+from dotenv import load_dotenv
+from sqlalchemy import pool
+from alembic import context
+
 # Ajout du dossier parent (backend) dans le sys.path pour qu'Alembic trouve le module 'app'
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if backend_dir not in sys.path:
     sys.path.insert(0, backend_dir)
 
-from dotenv import load_dotenv
-from sqlalchemy import engine_from_config, pool
+from app.db.base import Base  # noqa: E402
+from app.models.user import User  # noqa: F401, E402
 
-from alembic import context
+
 
 # ---------------------------------------------------------------------------
 # Chargement des variables d'environnement (.env)
@@ -58,11 +62,6 @@ config.set_main_option("sqlalchemy.url", sync_url)
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# ---------------------------------------------------------------------------
-# Metadata — tous les modèles doivent être importés ici via app.db.base
-# ---------------------------------------------------------------------------
-from app.db.base import Base   # noqa: E402
-from app.models.user import User  # noqa: F401, E402
 
 target_metadata = Base.metadata
 
@@ -91,7 +90,6 @@ def run_migrations_offline() -> None:
 
 def run_migrations_online() -> None:
     """Lance les migrations en mode online avec psycopg2."""
-    from sqlalchemy import create_engine
 
     # Passer le socket host via connect_args si nécessaire
     connect_args = {}

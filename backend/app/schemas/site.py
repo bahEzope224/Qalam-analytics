@@ -8,9 +8,8 @@ Couvre les réponses API pour :
 """
 
 from datetime import datetime
-from typing import Annotated
 
-from pydantic import BaseModel, HttpUrl, Field, field_validator
+from pydantic import BaseModel, Field
 
 from app.models.site import SiteStatus
 

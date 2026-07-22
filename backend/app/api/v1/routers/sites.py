@@ -9,10 +9,10 @@ DELETE /api/v1/sites/{site_id}   → supprimer un site
 GET    /api/v1/sites/{site_id}/realtime → utilisateurs temps réel
 """
 
-from typing import Annotated, Literal
+from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import select, func
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.v1.dependencies import (
@@ -23,7 +23,7 @@ from app.api.v1.dependencies import (
 )
 from app.models.site import Site, SiteStatus
 from app.models.user import User
-from app.schemas.metrics import SiteDetailMetrics, SiteListMetrics
+from app.schemas.metrics import SiteDetailMetrics
 from app.schemas.site import SiteCreate, SiteSchema, SiteUpdate, SiteDashboardCard
 from app.services.aggregation import AggregationService
 from app.services.ga4_client import GA4Client
