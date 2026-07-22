@@ -12,19 +12,19 @@ import os
 import sys
 from logging.config import fileConfig
 
-from dotenv import load_dotenv
-from sqlalchemy import pool
-from alembic import context
-
-# Ajout du dossier parent (backend) dans le sys.path pour qu'Alembic trouve le module 'app'
+# ---------------------------------------------------------------------------
+# sys.path — doit être fait AVANT d'importer les modules 'app'
+# ---------------------------------------------------------------------------
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if backend_dir not in sys.path:
     sys.path.insert(0, backend_dir)
 
-from app.db.base import Base  # noqa: E402
-from app.models.user import User  # noqa: F401, E402
-
-
+# ruff: noqa: E402  (imports after sys.path manipulation are intentional)
+from dotenv import load_dotenv
+from sqlalchemy import create_engine, pool
+from alembic import context
+from app.db.base import Base
+from app.models.user import User  # noqa: F401
 
 # ---------------------------------------------------------------------------
 # Chargement des variables d'environnement (.env)
@@ -37,12 +37,10 @@ load_dotenv(os.path.join(backend_dir, ".env"))
 config = context.config
 
 # Convertit postgresql+asyncpg:// → postgresql+psycopg2://
-# pour que les migrations Alembic utilisent le driver sync.
 database_url = os.environ.get("DATABASE_URL", "")
 sync_url = database_url.replace("postgresql+asyncpg://", "postgresql+psycopg2://")
 
 # Extraire les paramètres host= et port= de la query string
-# asyncpg les accepte dans l'URL mais psycopg2 les veut dans connect_args
 socket_host = None
 socket_port = None
 if "?" in sync_url:
@@ -61,7 +59,6 @@ config.set_main_option("sqlalchemy.url", sync_url)
 # Activation des logs via alembic.ini
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
-
 
 target_metadata = Base.metadata
 
@@ -90,8 +87,6 @@ def run_migrations_offline() -> None:
 
 def run_migrations_online() -> None:
     """Lance les migrations en mode online avec psycopg2."""
-
-    # Passer le socket host via connect_args si nécessaire
     connect_args = {}
     if socket_host:
         connect_args["host"] = socket_host
@@ -120,4 +115,3 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-
