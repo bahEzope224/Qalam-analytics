@@ -1,0 +1,40 @@
+# ============================================================
+# Dépendances Python – Plateforme Analytics Interne
+# ============================================================
+
+# --- Framework web ---
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+
+# --- Validation / configuration ---
+pydantic==2.8.2
+pydantic-settings==2.4.0
+
+# --- Base de données ---
+sqlalchemy==2.0.36
+asyncpg==0.29.0          # driver PostgreSQL async
+alembic==1.13.3          # migrations
+
+# --- Google Analytics 4 ---
+google-analytics-data==0.18.13
+google-auth==2.35.0
+
+# --- Sécurité / authentification ---
+python-jose[cryptography]==3.3.0   # JWT
+passlib[bcrypt]==1.7.4             # hachage de mots de passe
+python-multipart==0.0.12           # form data (login)
+
+# --- Cache / tâches planifiées ---
+redis==5.1.1
+celery==5.4.0
+
+# --- HTTP client (appels externes) ---
+httpx==0.27.2
+
+# --- Utilitaires ---
+python-dotenv==1.0.1
+
+# --- Tests ---
+pytest==8.3.3
+pytest-asyncio==0.24.0
+httpx==0.27.2            # TestClient async

@@ -1,0 +1,120 @@
+# ============================================================
+#  .gitignore — Qalam Analytics Platform
+#  Monorepo : backend (Python/FastAPI) + frontend (React/Vite)
+# ============================================================
+
+
+# ──────────────────────────────────────────────────────────
+# 1. SYSTÈME / ÉDITEURS
+# ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+
+# ──────────────────────────────────────────────────────────
+# 2. SECRETS & VARIABLES D'ENVIRONNEMENT
+# ──────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+credentials/
+*.json.secret
+*service_account*.json
+
+
+# ──────────────────────────────────────────────────────────
+# 3. PYTHON – BACKEND
+# ──────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.spec
+*.so
+*.dylib
+
+# Environnements virtuels
+venv/
+.venv/
+env/
+ENV/
+.env/
+
+# Tests / couverture
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.junit.xml
+coverage.xml
+nosetests.xml
+
+# Mypy / Ruff / Pylint
+.mypy_cache/
+.ruff_cache/
+.pylint.d/
+
+# Alembic – ne pas versionner les versions auto-générées localement
+# (les migrations sont versionnées ; seulement les artefacts tmp)
+alembic/versions/__pycache__/
+
+
+# ──────────────────────────────────────────────────────────
+# 4. NODE.JS – FRONTEND
+# ──────────────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+.npm
+.yarn/
+.pnp.*
+
+# Build Vite
+frontend/dist/
+frontend/.vite/
+dist/
+.vite/
+
+# Logs npm / yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+#script
+
+mockup/script.py
+
+# ──────────────────────────────────────────────────────────
+# 5. DOCKER
+# ──────────────────────────────────────────────────────────
+*.env.docker
+docker-compose.override.yml
+
+
+# ──────────────────────────────────────────────────────────
+# 6. LOGS & DONNÉES TEMPORAIRES
+# ──────────────────────────────────────────────────────────
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+
+# ──────────────────────────────────────────────────────────
+# 7. MOCKUPS & ASSETS LOCAUX (ne pas pousser les images sources)
+# ──────────────────────────────────────────────────────────
+extracted/

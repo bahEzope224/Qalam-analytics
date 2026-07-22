@@ -1,0 +1,82 @@
+# ============================================================
+#  docker-compose.yml — Stack complète de développement
+#  Services : backend, frontend, PostgreSQL, Redis
+# ============================================================
+
+services:
+
+  # ── Base de données PostgreSQL ──────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: qalam_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-qalam}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-qalam_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-analytics_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-qalam}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Cache Redis ─────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: qalam_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── API FastAPI ─────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: qalam_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-qalam}:${POSTGRES_PASSWORD:-qalam_secret}@db:5432/${POSTGRES_DB:-analytics_db}
+      REDIS_URL: redis://redis:6379/0
+      ENV: production
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Interface React (Nginx) ─────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: qalam_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
