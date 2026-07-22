@@ -9,6 +9,7 @@ uvicorn[standard]==0.30.6
 # --- Validation / configuration ---
 pydantic==2.8.2
 pydantic-settings==2.4.0
+pydantic[email]==2.8.2       # email-validator for EmailStr fields
 
 # --- Base de données ---
 sqlalchemy==2.0.36
