@@ -12,7 +12,8 @@ pydantic-settings==2.4.0
 
 # --- Base de données ---
 sqlalchemy==2.0.36
-asyncpg==0.29.0          # driver PostgreSQL async
+asyncpg==0.29.0          # driver PostgreSQL async (runtime FastAPI)
+psycopg2-binary==2.9.10  # driver PostgreSQL sync (Alembic migrations)
 alembic==1.13.3          # migrations
 
 # --- Google Analytics 4 ---
